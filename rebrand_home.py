@@ -9,6 +9,11 @@ html = page.read_text(encoding="utf-8")
 html = re.sub(r'<link rel="modulepreload"[^>]*>', '', html)
 html = re.sub(r'<script\b[^>]*>.*?</script>', '', html, flags=re.S | re.I)
 
+# GitHub Pages hosts this repository under /mastertrans-website/. Root-relative
+# CSS asset URLs would otherwise resolve against dzhokhar1.github.io itself.
+# Keep assets relative so the same output works both locally and on Pages.
+html = re.sub(r'url\((?P<quote>["\']?)/', r'url(\g<quote>', html)
+
 calculator_head = '''<div class="vz-calculator-main-grid"><div class="fs-16 text-medium vz-calculator-main-title">Рассчитать цену / Заказать перевозку</div><div></div><div class="vz-switcher vz-switcher-rounded"><div class="vz-switcher-wrapper"><div class="vz-tooltip vz-tooltip-flex"><div class="vz-switcher-item active"><span>Рассчитать</span></div></div><div class="vz-tooltip vz-tooltip-flex"><div class="vz-switcher-item"><span>Отследить</span></div></div></div></div></div>'''
 html = re.sub(r'<div class="vz-calculator-main-grid"><div class="fs-16 text-medium vz-calculator-main-title">Рассчитать цену / Заказать перевозку</div><div></div><span></span></div>', calculator_head, html, count=1)
 
