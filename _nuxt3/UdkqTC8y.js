@@ -1,0 +1,2 @@
+import{d as t,b as s,f as e,e as a,o,j as r}from"./BYoogXIh.js";import{_ as c,a as i}from"./CEiHn7Tu.js";import"./i4QHR1kd.js";import"./DGaq7tw0.js";import"./y_GTqjKz.js";import"./DHJCeKyd.js";import"./bI58mrlk.js";const n={class:"belarus"},_={class:"public-container"},k=t({__name:"belarus",setup(m){return(p,l)=>(o(),s("div",n,[e(r,{title:"Грузоперевозки Беларусь","title-in-breadcrumbs":"Беларусь"}),a("div",_,[e(c,{country:"BY"}),e(i)])]))}});export{k as default};
+//# sourceMappingURL=UdkqTC8y.js.map

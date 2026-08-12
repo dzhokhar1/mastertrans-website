@@ -1,0 +1,2 @@
+import{a5 as n,be as i,aH as a,a6 as s}from"./BYoogXIh.js";const c=a(async e=>{const r=await $fetch(`${s}/order/wrapping/state`,{params:{locationGuid:e},credentials:"include"});if(!e){const t=r.find(p=>p.code==="palletCustomer");t&&(t.disabled=!0)}return r}),d=a(()=>$fetch(`${s}/order/wrapping`,{credentials:"include"})),g=e=>n(`${i}/order/wrapping/get-list`,{method:"POST",body:Object.assign(e,{grouped:!1})});export{g as a,c as b,d as g};
+//# sourceMappingURL=BzacY9-H.js.map

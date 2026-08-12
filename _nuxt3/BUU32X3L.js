@@ -1,0 +1,2 @@
+import{d as s,o as i,k as _,g as r,h as l,_ as u,s as m}from"./BYoogXIh.js";const p={inheritAttrs:!1},f=s({...p,__name:"public-back-button",emits:["click"],setup(b,{emit:c}){const e=c;function n(t){e("click",t)}return(t,o)=>{const a=u;return i(),_(a,{outline:"",large:"",variant:"primary","icon-name":"arrow-left","icon-left":"","icon-size":"20",onClick:n,class:"mb-20 w-100 public-back-button"},{default:r(()=>[...o[0]||(o[0]=[l(" Назад ",-1)])]),_:1})}}}),d=m(f,[["__scopeId","data-v-92b912cd"]]);export{d as P};
+//# sourceMappingURL=BUU32X3L.js.map
