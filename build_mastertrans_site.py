@@ -65,9 +65,11 @@ TARIFF_CONDITIONS = [
 ]
 
 PAGE_CSS = """<style id="master-trans-pages">
-:root{--primary:#a739f7;--error:#2803fd;--info:#2803fd;--notification:#f2ecff}
+:root{--primary:#a739f7;--error:#2803fd;--info:#2803fd;--notification:#f2ecff;--primary-filter:brightness(0) saturate(100%) invert(34%) sepia(99%) saturate(4509%) hue-rotate(260deg) brightness(99%) contrast(96%);--primary-wh-filter:brightness(0) saturate(100%) invert(34%) sepia(99%) saturate(4509%) hue-rotate(260deg) brightness(99%) contrast(96%)}
+.vz-logo>.vz-icon{width:225px!important;height:58px!important;display:flex!important;align-items:center;font-size:0!important;line-height:1!important}.vz-logo .mt-logo-lockup{width:225px;height:58px;display:flex;align-items:center;gap:10px}.vz-logo .mt-logo-lockup>img{width:68px!important;height:50px!important;object-fit:contain;filter:none!important}.mt-logo-copy{display:flex;flex-direction:column;line-height:1;white-space:nowrap}.mt-logo-copy b{color:#0f0e12;font-size:20px;font-weight:700}.mt-logo-copy small{margin-top:7px;color:#777;font-size:9px;letter-spacing:2px;text-transform:uppercase}.public-footer .mt-logo-copy b{color:#fff}.public-footer .mt-logo-copy small{color:#bbb}.public-header .vz-logo>.vz-icon,.public-header .vz-logo .mt-logo-lockup{width:190px!important;height:48px!important}.public-header .vz-logo .mt-logo-lockup{gap:9px}.public-header .vz-logo .mt-logo-lockup>img{width:58px!important;height:42px!important}.public-header .mt-logo-copy b{font-size:19px}.public-header .mt-logo-copy small{font-size:8px;letter-spacing:1.8px;margin-top:6px}.dark .public-header .mt-logo-copy b{color:var(--pure-white)}.dark .public-header .mt-logo-copy small{color:var(--font-light)}
+.public-footer-contacts{min-width:0}.public-footer-contacts-actions{max-width:100%;overflow-wrap:anywhere;word-break:break-word}
 .mt-page-section{margin:70px 0}.mt-page-section h2{margin-bottom:30px}.mt-page-lead{font-size:18px;line-height:1.65;max-width:980px}.mt-content-card{background:var(--public-card-bg);border-radius:10px;box-shadow:var(--pub-light-gray-box-shadow);padding:30px}.mt-content-grid{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}.mt-content-grid .public-service-links-grid-item{min-height:190px}.mt-data-table-wrap{border:1px solid var(--border-gray);border-radius:8px;overflow:auto}.mt-data-table{border-collapse:collapse;min-width:700px;width:100%}.mt-data-table th,.mt-data-table td{border-bottom:1px solid var(--border-gray);padding:14px 16px;text-align:left}.mt-data-table th{background:var(--section-gray);font-weight:600}.mt-data-table tr:last-child td{border-bottom:0}.mt-city-cards{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}.mt-city-card{background:var(--public-card-bg);border-radius:10px;box-shadow:var(--pub-light-gray-box-shadow);color:var(--font-dark);display:block;padding:28px;text-decoration:none}.mt-city-card h2{font-size:20px;margin:0 0 16px}.mt-city-card p{margin:6px 0}.mt-price-links{display:grid;gap:15px;grid-template-columns:repeat(2,minmax(0,1fr))}.mt-price-links a{align-items:center;border:1px solid var(--primary);border-radius:4px;color:var(--primary);display:flex;justify-content:space-between;padding:15px 18px;text-decoration:none}.mt-branch-layout{display:grid;gap:30px;grid-template-columns:minmax(0,2fr) minmax(260px,1fr)}.mt-branch-layout .contacts-terminals-card{display:block!important}.mt-socials{display:flex;flex-wrap:wrap;gap:18px}.mt-socials a{color:var(--primary)}
-@media(max-width:760px){.mt-page-section{margin:45px 0}.mt-content-grid,.mt-city-cards,.mt-price-links,.mt-branch-layout{grid-template-columns:1fr}.mt-content-card{padding:20px}.mt-content-grid .public-service-links-grid-item{min-height:0}.mt-data-table th,.mt-data-table td{padding:11px 12px}}
+@media(max-width:760px){.public-header .vz-logo>.vz-icon,.public-header .vz-logo .mt-logo-lockup{width:170px!important;height:44px!important}.public-header .vz-logo .mt-logo-lockup{gap:8px}.public-header .vz-logo .mt-logo-lockup>img{width:50px!important;height:38px!important}.public-header .mt-logo-copy b{font-size:16px}.public-header .mt-logo-copy small{font-size:7.5px;letter-spacing:1.5px;margin-top:5px}.groupage-cargo-props{flex-direction:column}.groupage-cargo-props-wrapper{margin-right:0!important}.groupage-cargo-props>.public-card-info{margin-top:25px;width:100%}.groupage-cargo-props>.public-card-info .public-card-info-wrapper,.groupage-cargo-props>.public-card-info .public-card-info-img{width:100%}.mt-page-section{margin:45px 0}.mt-content-grid,.mt-city-cards,.mt-price-links,.mt-branch-layout{grid-template-columns:1fr}.mt-content-card{padding:20px}.mt-content-grid .public-service-links-grid-item{min-height:0}.mt-data-table th,.mt-data-table td{padding:11px 12px}}
 </style>"""
 
 
@@ -97,39 +99,35 @@ def depth_prefix(output: Path) -> str:
 
 
 def common_header(prefix: str) -> str:
-    def a(path: str, label: str) -> str:
-        return f'<a href="{prefix}{path}/index.html" class="">{label}</a>'
     items = [
-        ("services", "Услуги"),
-        ("delivery-russia", "Доставка"),
-        ("tariffs", "Тарифы"),
-        ("address", "Контакты"),
-        ("information", "О компании"),
+        ("Услуги", "services", [("services", "Все услуги"), ("services#additional", "Дополнительные услуги")]),
+        ("Доставка", "delivery-russia", [("delivery-russia", "Как отправить груз"), ("address", "Контакты и терминалы")]),
+        ("Тарифы", "tariffs", [("tariffs", "Все тарифы"), ("tariffs#moskva", "Москва"), ("tariffs#grozny", "Грозный"), ("tariffs#mahachkala", "Махачкала")]),
+        ("О компании", "information", [("information", "О компании"), ("address", "Филиалы"), ("address/moskva", "Москва"), ("address/rostov-na-donu", "Ростов-на-Дону")]),
     ]
-    desktop = "".join(
-        '<div class="public-header-menu-collapse-item"><div class="public-header-menu-collapse-item-title">'
-        + a(path, label) + "</div></div>" for path, label in items
-    )
+    desktop=[]
+    for label,path,subitems in items:
+        links="".join(f'<a href="{prefix}{subpath}/index.html">{sublabel}</a>' if "#" not in subpath else f'<a href="{prefix}{subpath.replace("#", "/index.html#", 1)}">{sublabel}</a>' for subpath,sublabel in subitems)
+        desktop.append(f'<div class="public-header-menu-collapse-item"><div class="public-header-menu-collapse-item-title"><a href="{prefix}{path}/index.html">{label}</a></div><div class="public-header-menu-collapse-item-content" style="display:none"><div class="public-header-menu-collapse-item-links">{links}</div></div></div>')
     return (
         '<div class="public-header-menu-collapse">'
         '<div class="public-header-menu-collapse-items flex flex-space-between">'
-        f'{desktop}</div><div class="public-header-menu-collapse-ground" style="display:none;"></div></div>'
+        f'{"".join(desktop)}</div><div class="public-header-menu-collapse-ground" style="display:none;"></div></div>'
     )
 
 
 def common_mobile(prefix: str) -> str:
-    links = "".join(
-        f'<a href="{prefix}{path}/index.html" class="public-header-menu-mobile-link">{label}</a>'
-        for path, label in [
-            ("services", "Услуги"), ("delivery-russia", "Доставка"),
-            ("tariffs", "Тарифы"), ("address", "Контакты"),
-            ("information", "О компании"),
-        ]
-    )
+    groups=[
+        ("Услуги", [("services", "Все услуги")]),
+        ("Доставка", [("delivery-russia", "Как отправить груз"), ("address", "Контакты и терминалы")]),
+        ("Тарифы", [("tariffs", "Все тарифы")]),
+        ("О компании", [("information", "О компании"), ("address", "Филиалы")]),
+    ]
+    links="".join(f'<div class="vz-collapse-info"><div class="vz-collapse-info-header"><span>{label}</span><span></span></div><div class="vz-collapse-info-content" style="display:none"><div class="public-container flex flex-start"><div class="public-header-menu-mobile-links">'+"".join(f'<a href="{prefix}{path}/index.html">{text}</a>' for path,text in subitems)+'</div></div></div></div>' for label,subitems in groups)
     return f'''<div class="public-header-menu-mobile" style="display:none;">
       <div class="public-container public-container-mobile">
         <div class="public-header-menu-mobile-top flex flex-end flex-align-items-center"><div class="vz-icon mdi mdi-close public-header-menu-mobile-close" style="font-size:36px;line-height:36px;"><div class="vz-icon-masked"></div></div></div>
-        <div class="public-header-menu-mobile-links mt-30">{links}</div>
+        {links}
         <div class="public-header-menu-mobile-address"><div class="public-header-control public-header-control-dark"><span></span><a href="mailto:mastertransmsk@mail.ru" class="public-header-control-link">Рассчитать</a><a href="{prefix}delivery-russia/index.html" class="public-header-control-link">Доставка</a><a href="{prefix}address/index.html" class="public-header-control-link">Контакты</a></div></div>
       </div></div>'''
 
@@ -158,6 +156,9 @@ def clean_shell(text: str, prefix: str, page_title: str) -> str:
     text=re.sub(r'<meta name="description"[^>]*>', f'<meta name="description" content="{esc(page_title)} — Master Транс">', text, count=1, flags=re.I)
     text=re.sub(r'<meta property="og:title"[^>]*>', f'<meta property="og:title" content="{esc(page_title)} — Master Транс">', text, count=1, flags=re.I)
     text=re.sub(r'<script type="application/ld\+json"[^>]*>.*?</script>', '', text, flags=re.S|re.I)
+    # The four grouped navigation items already contain every destination.
+    # Remove the donor's separate fifth desktop item ("Контакты").
+    text=re.sub(r'<a\b(?=[^>]*class="[^"]*\bpublic-header-menu-item\b[^"]*")[^>]*>.*?</a>', '', text, flags=re.S|re.I)
     text=re.sub(r'<div class="public-footer-top-description">.*?</div>', '<div class="public-footer-top-description">Автомобильные грузоперевозки с компанией Master Транс</div>', text, flags=re.S)
     for removable in ("public-footer-apps-mobile", "public-footer-additional"):
         try: text=replace_div(text, removable, "")
@@ -167,11 +168,11 @@ def clean_shell(text: str, prefix: str, page_title: str) -> str:
     text=text.replace('href="edo-logistic/index.html" class="public-header-register"', 'href="mailto:mastertransmsk@mail.ru" class="public-header-register"')
     text=text.replace('href="../edo-logistic/index.html" class="public-header-register"', 'href="mailto:mastertransmsk@mail.ru" class="public-header-register"')
     text=text.replace('href="../../edo-logistic/index.html" class="public-header-register"', 'href="mailto:mastertransmsk@mail.ru" class="public-header-register"')
-    text=re.sub(r'href="(?:\.\./)*actions/index\.html"', f'href="{prefix}information/index.html"', text)
+    text=re.sub(r'href="(?:\.\./)*actions/index\.html"', 'href="mailto:mastertransmsk@mail.ru"', text)
     text=re.sub(r'href="(?:\.\./)*order/manage/index\.html"', f'href="{prefix}delivery-russia/index.html"', text)
     text=re.sub(r'href="(?:\.\./)*directions/index\.html"', f'href="{prefix}address/index.html"', text)
     text=re.sub(r'href="(?:\.\./)*(?:order/create/index\.html|\./personal/auth/)"', 'href="mailto:mastertransmsk@mail.ru"', text)
-    text=text.replace("Электронный документооборот", "mastertransmsk@mail.ru").replace("Отследить", "Доставка").replace("Акции", "О компании").replace("Направления", "Контакты").replace("Личный кабинет", "Заказать расчет")
+    text=text.replace("Электронный документооборот", "mastertransmsk@mail.ru").replace("Отследить", "Доставка").replace("Направления", "Контакты").replace("Личный кабинет", "Заказать расчет")
     text=text.replace("Возовоз", "Master Транс").replace("возовоз", "Master Транс").replace("Vozovoz", "Master Trans").replace("VOZOVOZ", "MASTER TRANS")
     return text
 
@@ -188,7 +189,7 @@ def home_locations() -> str:
 def services_main(prefix: str) -> str:
     cards = "".join(f'''<div class="vz-cursor-pointer public-service-links-grid-item"><div class="vz-icon mdi mdi-arrow-top-right-thick primary" style="font-size:24px;line-height:24px;"><div class="vz-icon-masked bg-primary"></div></div><div class="public-service-links-grid-item-title"><span>{esc(title)}</span></div><div class="public-service-links-grid-item-text mt-20">{esc(text)}</div></div>''' for title, text in SERVICES)
     rows = "".join(f"<tr><td>{esc(a)}</td><td>{esc(b)}</td><td>{esc(c)}</td></tr>" for a, b, c in SERVICE_ROWS)
-    return f'''<div class="services">{page_header(prefix, "Транспортные услуги", "Транспортные услуги")}<div class="public-container public-container-mobile"><div class="public-service-links-grid mt-70"><h2 class="mb-30 flex flex-align-items-center"><div class="vz-icon mdi mr-15" style="font-size:36px;line-height:36px;"><img class="vz-icon-masked svg-primary" src="{prefix}svg/box-transportation.svg" style="width:36px;height:36px;"></div>Услуги Master Транс</h2><p class="mt-page-lead">Наши специалисты предлагают услуги по перевозке и обработке грузов.</p><div class="compact text-only public-service-links-grid-items mt-30">{cards}</div></div><section class="mt-page-section"><h2>Дополнительные услуги</h2><div class="mt-data-table-wrap"><table class="mt-data-table"><thead><tr><th>Наименование</th><th>Мин. стоимость</th><th>Стоимость за м³</th></tr></thead><tbody>{rows}</tbody></table></div></section></div></div>'''
+    return f'''<div class="services">{page_header(prefix, "Транспортные услуги", "Транспортные услуги")}<div class="public-container public-container-mobile"><div class="public-service-links-grid mt-70"><h2 class="mb-30 flex flex-align-items-center"><div class="vz-icon mdi mr-15" style="font-size:36px;line-height:36px;"><img class="vz-icon-masked svg-primary" src="{prefix}svg/box-transportation.svg" style="width:36px;height:36px;"></div>Услуги Master Транс</h2><p class="mt-page-lead">Наши специалисты предлагают услуги по перевозке и обработке грузов.</p><div class="compact text-only public-service-links-grid-items mt-30">{cards}</div></div><section class="mt-page-section" id="additional"><h2>Дополнительные услуги</h2><div class="mt-data-table-wrap"><table class="mt-data-table"><thead><tr><th>Наименование</th><th>Мин. стоимость</th><th>Стоимость за м³</th></tr></thead><tbody>{rows}</tbody></table></div></section></div></div>'''
 
 
 def delivery_main(prefix: str) -> str:

@@ -175,4 +175,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileClose = document.querySelector('.public-header-menu-mobile-close');
   mobileButton?.addEventListener('click', () => { if (mobileMenu) mobileMenu.style.display = 'block'; });
   mobileClose?.addEventListener('click', () => { if (mobileMenu) mobileMenu.style.display = 'none'; });
+
+  const mobileGroups = Array.from(document.querySelectorAll('.public-header-menu-mobile .vz-collapse-info'));
+  mobileGroups.forEach((group) => {
+    const header = group.querySelector('.vz-collapse-info-header');
+    const content = group.querySelector('.vz-collapse-info-content');
+    header?.setAttribute('role', 'button');
+    header?.setAttribute('tabindex', '0');
+    header?.setAttribute('aria-expanded', 'false');
+    const toggle = () => {
+      const willOpen = content?.style.display === 'none';
+      mobileGroups.forEach((other) => {
+        const otherContent = other.querySelector('.vz-collapse-info-content');
+        const otherHeader = other.querySelector('.vz-collapse-info-header');
+        if (otherContent) otherContent.style.display = 'none';
+        otherHeader?.setAttribute('aria-expanded', 'false');
+      });
+      if (content) content.style.display = willOpen ? 'block' : 'none';
+      header?.setAttribute('aria-expanded', String(willOpen));
+    };
+    header?.addEventListener('click', toggle);
+    header?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggle();
+      }
+    });
+  });
 });
