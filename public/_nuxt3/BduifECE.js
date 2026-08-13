@@ -1,0 +1,2 @@
+import{d as e,o as r,k as a,g as o,h as c,t as n,_ as s,s as i}from"./BYoogXIh.js";const p=e({__name:"public-order-create-button",props:{title:{default:"Рассчитать стоимость перевозки",type:String}},setup(t){return(_,l)=>(r(),a(s,{class:"public-order-create-button",variant:"primary","icon-name":"arrow-right","icon-size":"20","icon-right":"",large:"",to:{name:"order-create"}},{default:o(()=>[c(n(t.title),1)]),_:1}))}}),u=i(p,[["__scopeId","data-v-f541e2f4"]]);export{u as P};
+//# sourceMappingURL=BduifECE.js.map

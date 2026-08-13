@@ -1,0 +1,2 @@
+import{d as l,b as n,e as a,F as _,r as c,o as e,k as d,g as r,h as m,t as u,B as f}from"./BYoogXIh.js";const h={class:"shipping-types-faq my-90"},y=["innerHTML"],B=l({__name:"shipping-types-faq",props:{items:{type:Array,default:()=>[]}},setup(o){return(g,s)=>{const i=f;return e(),n("div",h,[s[0]||(s[0]=a("h2",null,"Часто задаваемые вопросы",-1)),(e(!0),n(_,null,c(o.items,(t,p)=>(e(),d(i,{key:p},{header:r(()=>[m(u(t.question),1)]),default:r(()=>[a("div",{innerHTML:t.answer},null,8,y)]),_:2},1024))),128))])}}});export{B as _};
+//# sourceMappingURL=DiP6GR48.js.map

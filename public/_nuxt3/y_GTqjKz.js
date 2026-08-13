@@ -1,0 +1,2 @@
+import{s as a,o as n,b as r,f as s,a2 as c,I as o}from"./BYoogXIh.js";const i={},l={class:"public-text-warning flex flex-align-items-start mt-15 color-primary"};function _(e,m){const t=o;return n(),r("div",l,[s(t,{name:"alert-circle-outline",variant:"primary",size:"18",class:"mr-5"}),c(e.$slots,"default",{},void 0,!0)])}const f=a(i,[["render",_],["__scopeId","data-v-02b85948"]]);export{f as P};
+//# sourceMappingURL=y_GTqjKz.js.map

@@ -1,0 +1,2 @@
+import{aH as n,a6 as a,aI as s}from"./BYoogXIh.js";const u=n(e=>$fetch(`${a}/content/page`,{params:{url:e},credentials:"include"}).catch(()=>({})));n(e=>$fetch(`${a}/content/text/${e}`,{credentials:"include"}));const i=n((e,t=1)=>$fetch(`${a}/search/content`,{params:{page:t,search:e},credentials:"include"}));function l(e,t){return(e||"").match(/%.*?%/g)?.forEach(r=>{const c=r.replace(/%/g,"");e=e.replace(r,s(t,c))}),e}export{u as g,l as r,i as s};
+//# sourceMappingURL=bI58mrlk.js.map

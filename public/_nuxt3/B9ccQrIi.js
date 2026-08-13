@@ -1,0 +1,2 @@
+import{aH as s,a5 as t,a6 as a,b2 as c}from"./BYoogXIh.js";const r=s((e,o)=>t(`${c}/contacts/get`,{method:"POST",body:{location:e,destination:o}}));function d(e){return t(`${c}/contacts/feedback`,{method:"post",body:e,credentials:"include"})}const u=s(()=>t(`${a}/feedback-message`));function i(e){return t(`${a}/feedback-message`,{method:"post",body:e,credentials:"include"})}function b(e){return t(`${a}/personal/ticket`,{method:"post",body:{content:e},manual:!0})}export{u as a,b,i as c,r as g,d as s};
+//# sourceMappingURL=B9ccQrIi.js.map

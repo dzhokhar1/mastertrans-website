@@ -1,0 +1,2 @@
+import{A as e}from"./BYoogXIh.js";const p=()=>["update:modelValue","change"],u={modelValue:{type:Array},required:{type:Boolean,default:!1},showUploadProblems:{type:Boolean,default:!1},multiple:{type:Boolean,default:!1},appendFiles:{type:Boolean,default:!1},size:{type:Number,default:3145728},maxFiles:{type:Number,default:0},accept:{type:Array,default:()=>[]}},r=()=>{let a=e([]);const l=e(!1),t=e(),s=e({});return{tempFiles:a,isMounted:l,fileUploader:t,uploadProblems:s}};export{p as a,r as b,u};
+//# sourceMappingURL=B3AUMCMo.js.map
