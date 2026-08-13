@@ -39,6 +39,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const cityButtons = Array.from(document.querySelectorAll('.public-header-region'));
+  const masterTransCities = ['Москва', 'Грозный', 'Хасавюрт', 'Махачкала', 'Ростов-на-Дону'];
+  const cityStorageKey = 'mastertrans-city';
+  const cityModal = document.createElement('div');
+  cityModal.className = 'mt-city-modal';
+  cityModal.setAttribute('role', 'dialog');
+  cityModal.setAttribute('aria-modal', 'true');
+  cityModal.setAttribute('aria-labelledby', 'mt-city-modal-title');
+  cityModal.innerHTML = `
+    <div class="mt-city-modal-inner">
+      <button class="mt-city-modal-close" type="button" aria-label="Закрыть выбор города">×</button>
+      <h2 class="mt-city-modal-title" id="mt-city-modal-title">Выберите ваш город</h2>
+      <div class="mt-city-current" aria-live="polite"><span>Москва</span></div>
+      <div class="mt-city-country"><span class="mt-city-country-flag" aria-hidden="true">🇷🇺</span><span>Россия</span></div>
+      <div class="mt-city-list">${masterTransCities.map((city) => `<button class="mt-city-option" type="button" data-city="${city}">${city}</button>`).join('')}</div>
+    </div>`;
+  document.body.append(cityModal);
+
+  const cityCurrent = cityModal.querySelector('.mt-city-current span');
+  const cityOptions = Array.from(cityModal.querySelectorAll('.mt-city-option'));
+  const cityClose = cityModal.querySelector('.mt-city-modal-close');
+  let selectedCity = 'Москва';
+  try {
+    const storedCity = localStorage.getItem(cityStorageKey);
+    if (masterTransCities.includes(storedCity)) selectedCity = storedCity;
+  } catch (_) {}
+
+  const applyCity = (city) => {
+    selectedCity = city;
+    cityButtons.forEach((button) => {
+      const label = button.querySelector('.vz-button-title span');
+      if (label) label.textContent = city;
+    });
+    if (cityCurrent) cityCurrent.textContent = city;
+    cityOptions.forEach((option) => option.classList.toggle('is-active', option.dataset.city === city));
+  };
+
+  const openCityModal = () => {
+    cityModal.classList.add('is-open');
+    document.body.classList.add('mt-city-modal-open');
+    cityClose?.focus();
+  };
+  const closeCityModal = () => {
+    cityModal.classList.remove('is-open');
+    document.body.classList.remove('mt-city-modal-open');
+  };
+
+  applyCity(selectedCity);
+  cityButtons.forEach((button) => {
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.addEventListener('click', openCityModal);
+  });
+  cityClose?.addEventListener('click', closeCityModal);
+  cityOptions.forEach((option) => option.addEventListener('click', () => {
+    applyCity(option.dataset.city);
+    try { localStorage.setItem(cityStorageKey, option.dataset.city); } catch (_) {}
+    closeCityModal();
+  }));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && cityModal.classList.contains('is-open')) closeCityModal();
+  });
+
   const slides = Array.from(document.querySelectorAll('.home-banner-slider .vueperslide'));
   const slider = document.querySelector('.home-banner-slider');
   let bullets = Array.from(document.querySelectorAll('.home-banner .vueperslides__bullet'));
