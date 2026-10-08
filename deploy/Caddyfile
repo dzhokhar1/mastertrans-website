@@ -1,9 +1,14 @@
 {
 	email {$ACME_EMAIL:admin@example.com}
+	# Публикуем только TCP, поэтому HTTP/3 (QUIC) не рекламируем —
+	# иначе браузеры стучались бы в мёртвый UDP.
+	servers {
+		protocols h1 h2
+	}
 }
 
-# SITE_ADDRESS=":80" пока нет домена (HTTP по IP);
-# SITE_ADDRESS="site.ru" — Caddy сам выпустит и будет обновлять TLS-сертификат.
+# SITE_ADDRESS=":80" пока нет домена; потом — доменное имя,
+# и Caddy сам выпустит и будет продлевать TLS-сертификат.
 {$SITE_ADDRESS::80} {
 	encode zstd gzip
 
@@ -11,8 +16,18 @@
 		X-Content-Type-Options nosniff
 		X-Frame-Options SAMEORIGIN
 		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		# Браузеры учитывают HSTS только по HTTPS, на :80 заголовок безвреден.
+		Strict-Transport-Security "max-age=31536000"
 		-Server
 	}
 
-	reverse_proxy app:3000
+	@scan path_regexp (?i)(\.(env|ini|sql|bak|pem|key|php)$|/wp-|/\.git|/\.env)
+	handle @scan {
+		abort
+	}
+
+	handle {
+		reverse_proxy app:3000
+	}
 }

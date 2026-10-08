@@ -1,0 +1,14 @@
+# /etc/fail2ban/jail.d/sshd.local
+[DEFAULT]
+backend = systemd
+findtime = 10m
+maxretry = 5
+bantime = 1h
+bantime.increment = true
+bantime.maxtime = 1w
+# 159.195.78.127 — хаб флота (мониторинг ходит по ключу svc-probe)
+ignoreip = 127.0.0.1/8 ::1 159.195.78.127
+
+[sshd]
+enabled = true
+port = ssh
