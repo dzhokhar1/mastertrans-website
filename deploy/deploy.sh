@@ -21,6 +21,7 @@ if ! docker buildx inspect "$BUILDER" >/dev/null 2>&1; then
     --driver-opt cpu-period=100000 --driver-opt cpu-quota=100000 \
     --driver-opt memory=2g --driver-opt memory-swap=2g >/dev/null
 fi
+trap 'docker buildx stop "$BUILDER" >/dev/null 2>&1 || true' EXIT
 docker buildx build --builder "$BUILDER" --load --target migrator \
   -t "mastertrans-migrate:$TAG" -t mastertrans-migrate:latest .
 docker buildx build --builder "$BUILDER" --load --target runner \
