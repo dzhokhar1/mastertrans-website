@@ -1,5 +1,4 @@
 {
-	email {$ACME_EMAIL:admin@example.com}
 	# Публикуем только TCP, поэтому HTTP/3 (QUIC) не рекламируем —
 	# иначе браузеры стучались бы в мёртвый UDP.
 	servers {

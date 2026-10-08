@@ -41,6 +41,15 @@ docker compose up -d --wait db
 docker compose run --rm migrate
 docker compose up -d --wait --remove-orphans
 
+# --wait не ловит контейнер, который упал сразу после старта и ушёл в рестарт.
+sleep 10
+bad=$(docker compose ps --all --format '{{.Service}} {{.State}}' | awk '$2 != "running"')
+if [ -n "$bad" ]; then
+  echo "!! сервисы не в состоянии running:" >&2
+  echo "$bad" >&2
+  exit 1
+fi
+
 # Чистим только свои образы: оставляем 3 последние сборки.
 for repo in mastertrans-app mastertrans-migrate; do
   docker images "$repo" --format '{{.Tag}}' | grep -vx latest | tail -n +4 \

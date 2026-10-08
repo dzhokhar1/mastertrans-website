@@ -78,7 +78,6 @@ services:
     restart: unless-stopped
     environment:
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
-      ACME_EMAIL: ${ACME_EMAIL:-}
     # По умолчанию только localhost (доступ через SSH-туннель).
     # Для публичного запуска в .env: HTTP_BIND=<IP>:80, HTTPS_BIND=<IP>:443
     ports:
