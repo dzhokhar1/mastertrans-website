@@ -1,22 +1,25 @@
 {
-	# Публикуем только TCP, поэтому HTTP/3 (QUIC) не рекламируем —
-	# иначе браузеры стучались бы в мёртвый UDP.
 	servers {
+		# TLS терминирует Caddy подписки и приходит к нам по site_net из
+		# частной подсети. Доверяем его X-Forwarded-For, чтобы видеть
+		# реальные IP посетителей в логах и в приложении.
+		trusted_proxies static private_ranges
+		# Порт только HTTP внутри Docker, HTTP/3 не рекламируем.
 		protocols h1 h2
 	}
 }
 
-# SITE_ADDRESS=":80" пока нет домена; потом — доменное имя,
-# и Caddy сам выпустит и будет продлевать TLS-сертификат.
-{$SITE_ADDRESS::80} {
+:80 {
 	encode zstd gzip
+
+	# Журнал запросов в stdout (ротация — в compose); client_ip — реальный IP.
+	log
 
 	header {
 		X-Content-Type-Options nosniff
 		X-Frame-Options SAMEORIGIN
 		Referrer-Policy strict-origin-when-cross-origin
 		Permissions-Policy "camera=(), microphone=(), geolocation=()"
-		# Браузеры учитывают HSTS только по HTTPS, на :80 заголовок безвреден.
 		Strict-Transport-Security "max-age=31536000"
 		-Server
 	}

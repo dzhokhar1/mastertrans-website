@@ -30,7 +30,10 @@ docker buildx stop "$BUILDER"
 
 install -d -m 750 "$STACK"
 install -m 644 deploy/compose.yaml "$STACK/compose.yaml"
-install -m 644 deploy/Caddyfile "$STACK/Caddyfile"
+# Caddyfile примонтирован файлом: install подменил бы inode, и контейнер
+# продолжил бы читать старую версию. cp пишет поверх того же inode.
+cp deploy/Caddyfile "$STACK/Caddyfile"
+chmod 644 "$STACK/Caddyfile"
 if [ ! -f "$STACK/.env" ]; then
   echo "!! $STACK/.env не найден — создайте из deploy/.env.example" >&2
   exit 1
@@ -40,6 +43,9 @@ cd "$STACK"
 docker compose up -d --wait db
 docker compose run --rm migrate
 docker compose up -d --wait --remove-orphans
+# Если caddy не пересоздавался, новый Caddyfile применяем мягко; невалидный
+# конфиг Caddy отклонит и останется на прежнем.
+docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile </dev/null
 
 # --wait не ловит контейнер, который упал сразу после старта и ушёл в рестарт.
 sleep 10

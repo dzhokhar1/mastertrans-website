@@ -76,8 +76,8 @@ docs/            ARCHITECTURE.md, INTEGRATION.md (контракт API для 1�
 - ✅ Схема БД-зеркала, миграция 0000_init применена на сервере
 - ✅ Сервер Selectel (общий с Remnawave), защита хоста, стек в Docker,
   панель Dockge, ежедневные бэкапы БД — см. docs/DEPLOY.md
-- 🟡 Публичный доступ: сайт слушает только localhost (вход через SSH-туннель);
-  нужен второй IPv4 и домен
+- ✅ Публичный доступ: https://site.mastertrans.tk — TLS на Caddy подписки,
+  проксирование на наш Caddy по сети `site_net` (второй IP для VDS недоступен)
 - 🟡 Деплой: `deploy/deploy.sh` по SSH (сборка на сервере с лимитом CPU);
   GitHub Actions — позже, если понадобится
 - ⬜ Выгрузка бэкапов вне сервера (Selectel S3)
